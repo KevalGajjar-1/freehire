@@ -189,6 +189,8 @@ linters:
         - indonesien
         - profissional
         - educacional
+        - informacion
+        - confidencial
 
 formatters:
   enable:

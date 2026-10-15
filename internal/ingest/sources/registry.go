@@ -431,6 +431,11 @@ func All(c HTTPClient) map[string]Source {
 		// Python.org: the Python Software Foundation's own job board. One server-rendered listing
 		// names the whole catalogue; posting pages carry the body. See pythonorg.go.
 		NewPythonOrg(c),
+		// OCC Mundial: Mexico's general job board, enumerated by the site's own job category
+		// (board) and hydrating each new posting from the JSON its split view loads. The search
+		// pages refuse the project's bare User-Agent, hence the browser-compatible form of it.
+		// See occ.go.
+		compatibleUASource(c, NewOCC),
 		// Tech in Asia: Southeast Asian startup board. One public Algolia index holds the whole
 		// catalogue, bodies included; the search key is read from the site's app bundle. The
 		// site's edge refuses any self-identifying User-Agent on paths robots.txt allows, hence
@@ -666,6 +671,16 @@ func macBrowserUASource[T any](c HTTPClient, build func(T) Source) Source {
 		return build(zero)
 	}
 	return build(any(newMacBrowserUAClient()).(T))
+}
+
+// compatibleUASource is browserUASource for an edge that admits the project's own identity once
+// it is written in the browser-compatible form (OCC Mundial). See compatibleUserAgent.
+func compatibleUASource[T any](c HTTPClient, build func(T) Source) Source {
+	if c == nil {
+		var zero T
+		return build(zero)
+	}
+	return build(any(newCompatibleUAClient()).(T))
 }
 
 // reg indexes sources by provider key. A duplicate key means two adapters claim the
