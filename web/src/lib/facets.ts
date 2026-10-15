@@ -379,6 +379,7 @@ export const SOURCE_LABELS: Record<string, string> = {
   sber: 'Sber', uzum: 'Uzum', megafon: 'MegaFon', freshteam: 'Freshteam', startupjobs: 'startup.jobs',
   wttj: 'Welcome to the Jungle',
   lesta: 'Lesta Games',
+  builtin: 'Built In',
 };
 
 /** Display label for a source slug (e.g. smartrecruiters → "SmartRecruiters"),
